@@ -32,26 +32,29 @@ Muitas aplicações falham ao tentar processar requisições pesadas de forma s�
 ## ☸️ Como Executar no Kubernetes (Minikube)
 
 ### 1. Inicializar o Cluster
+```
 minikube start
 minikube addons enable metrics-server
-2. Build das Imagens (No ambiente Minikube)
-Bash
+```
+### 2. Build das Imagens (No ambiente Minikube)
 
 # Configure o terminal para usar o Docker do Minikube
+```
 & minikube -p minikube docker-env | Invoke-Expression
-
+```
 # Build das imagens
+```
 docker build -t gateway-api:latest -f src/Gateway.API/Dockerfile .
 docker build -t worker-consumer:latest -f src/Worker.Consumer/Dockerfile .
 docker build -t slow-api:latest -f src/Slow.API/Dockerfile .
-3. Deploy dos Manifestos
-Bash
-
+```
+### 3. Deploy dos Manifestos
+```
 kubectl apply -f infra/k8s/
-4. Teste de Carga e Escalonamento
+```
+### 4. Teste de Carga e Escalonamento
 Para observar o Kubernetes criando novos Pods automaticamente enquanto a fila processa:
-
-Bash
-
 # Acompanhe o HPA em tempo real
+```
 kubectl get hpa -w
+```
